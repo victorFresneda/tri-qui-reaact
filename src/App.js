@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import './App.css';
 import { Board } from './components/Board/Board';
+import { ScoreBoard } from './components/ScoreBoard/ScoreBoard';
 
 const winningPositions = [
   [0, 1, 2],
@@ -25,6 +26,12 @@ const App = () => {
     x: 0,
     o: 0
   });
+
+  const reset = () => {
+    setTurn('x');
+    setSquares(Array(9).fill(null));
+    setWinningSquares([]);
+  } 
 
   const chekcForWinner = newSquares => {
     for(let i = 0;  i<winningPositions.length; i++){
@@ -63,11 +70,17 @@ const App = () => {
     }
 
     setWinningSquares(winningPositions);
+
+    setTimeout(() => {
+      reset();  
+    }, 4000);
+    
   }
 
   return (
     <div className='container'>
       <Board winningSquares={winningSquares} turn={turn} squares={squares} onClick={handleClick}/>
+      <ScoreBoard scoreO={score.o} scoreX={score.x} />
     </div>
   );
 }
